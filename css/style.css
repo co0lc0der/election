@@ -622,6 +622,15 @@
   border-radius: 10px;
 }
 
+.custom-style .hair-style-7 {
+  display: none;
+  width: 160px;
+  height: 80px;
+  background: #f2f2f2 url("../img/hair/slide/hair-7.png") center no-repeat;
+  background-size: 40%;
+  border-radius: 10px;
+}
+
 .custom-style .clothes-style-1 {
   width: 160px;
   height: 80px;
