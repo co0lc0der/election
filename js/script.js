@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			clothesOffset = 0;//смещение в одежде по полу
 
 // create button -----------------------------------
-//	document.getElementById('popup-btn').addEventListener('click', () => {
+	document.getElementById('popup-btn').addEventListener('click', () => {
 		mainPage.style.display = 'none';
 		overlay.style.display = 'none';
 		customPage.style.display = 'flex';
@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			if (customPage.childNodes[i].nodeType == 1) customPage.childNodes[i].style.display = 'block';	
 		}
 		showCustomCandidate();
-//	});//createButton.click
+	});//createButton.click
 
 // customizer -----------------------------------
 	function setSkin(n) {
