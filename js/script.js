@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			clothesOffset = 0;//смещение в одежде по полу
 
 // create button -----------------------------------
-	document.getElementById('popup-btn').addEventListener('click', () => {
+//	document.getElementById('popup-btn').addEventListener('click', () => {
 		mainPage.style.display = 'none';
 		overlay.style.display = 'none';
 		customPage.style.display = 'flex';
@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			if (customPage.childNodes[i].nodeType == 1) customPage.childNodes[i].style.display = 'block';	
 		}
 		showCustomCandidate();
-	});//createButton.click
+//	});//createButton.click
 
 // customizer -----------------------------------
 	function setSkin(n) {
@@ -73,7 +73,7 @@ window.addEventListener('DOMContentLoaded', function() {
 		setSkin(OurCandidate.skin);
 		setClothes(OurCandidate.clothes);
 		setHair(OurCandidate.hair);
-		if (debug) console.log('show');
+		if (debug) console.log('showCustomCandidate');
 		if (debug) console.log(OurCandidate);
 	}//showCustomCandidate
 
@@ -91,7 +91,7 @@ window.addEventListener('DOMContentLoaded', function() {
 		//setSkin(OurCandidate.skin);
 		//setClothes(OurCandidate.clothes);
 		//setHair(OurCandidate.hair);
-		if (debug) console.log('set');
+		if (debug) console.log('setCustomCandidate');
 		if (debug) console.log(OurCandidate);
 	}//setCustomCandidate
 
@@ -324,7 +324,12 @@ window.addEventListener('DOMContentLoaded', function() {
 	document.getElementById('ready').addEventListener('click', () => {
 		setCustomCandidate();
 		showCustomCandidate();
-		
+		mainPage.style.display = 'flex';
+		//overlay.style.display = 'none';
+		customPage.style.display = 'none';
 	});//readyButton.click
+
+// main page -----------------------------------
+
 
 });//DOMContentLoaded
