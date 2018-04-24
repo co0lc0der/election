@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			clothesOffset = 0;//смещение в одежде по полу
 
 // create button -----------------------------------
-//	document.getElementById('popup-btn').addEventListener('click', () => {
+	document.getElementById('popup-btn').addEventListener('click', () => {
 		mainPage.style.display = 'none';
 		overlay.style.display = 'none';
 		customPage.style.display = 'flex';
@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			if (customPage.childNodes[i].nodeType == 1) customPage.childNodes[i].style.display = 'block';	
 		}
 		showCustomCandidate();
-//	});//createButton.click
+	});//createButton.click
 
 // customizer -----------------------------------
 	function setSkin(n) {
@@ -103,13 +103,14 @@ window.addEventListener('DOMContentLoaded', function() {
 			skinNextButton = skinSlider.querySelector(".next"),
 			hairSlider = document.querySelector(".hair"),
 			hairSlides = document.querySelectorAll(".hair-style"),
-			hairAllSlides = document.querySelectorAll('.hair>div'),
-			hairSlideIndex = OurCandidate.hair - sexOffset;
+			hairAllDivs = document.querySelectorAll('.hair>div'),
+			hairSlideIndex = OurCandidate.hair - hairOffset;
 			hairPrevButton = hairSlider.querySelector(".prev"),
 			hairNextButton = hairSlider.querySelector(".next"),
 			clothesSlider = document.querySelector(".clothes"),
 			clothesSlides = document.querySelectorAll(".clothes-style"),
-			clothesSlideIndex = OurCandidate.clothes - sexOffset;
+			clothesAllDivs = document.querySelectorAll('.clothes>div'),
+			clothesSlideIndex = OurCandidate.clothes - clothesOffset;
 			clothesPrevButton = clothesSlider.querySelector(".prev"),
 			clothesNextButton = clothesSlider.querySelector(".next");
 
@@ -119,12 +120,10 @@ window.addEventListener('DOMContentLoaded', function() {
 	function showSkinSlides(n) {
 		if (n > skinSlides.length) {
 			skinSlideIndex = 1;
-			//if (!OurCandidate.sex) { OurCandidate.skin += 3; }
 		}//if
 
 		if (n < 1) {
 			skinSlideIndex = skinSlides.length;
-			//if (!OurCandidate.sex) { OurCandidate.skin += 3; }
 		}//if
 
 		for (let i = 0; i < skinSlides.length; i++) {
@@ -156,12 +155,10 @@ window.addEventListener('DOMContentLoaded', function() {
 	function showHairSlides(n) {
 		if (n > hairSlides.length) {
 			hairSlideIndex = 1;
-			//if (!OurCandidate.sex) { OurCandidate.skin += 3; }
 		}//if
 
 		if (n < 1) {
 			hairSlideIndex = hairSlides.length;
-			//if (!OurCandidate.sex) { OurCandidate.skin += 3; }
 		}//if
 
 		for (let i = 0; i < hairSlides.length; i++) {
@@ -173,42 +170,30 @@ window.addEventListener('DOMContentLoaded', function() {
 
 	function plusHairSlides(n) {
 		showHairSlides(hairSlideIndex += n);
-		OurCandidate.hair = hairSlideIndex;// + hairOffset;
+		OurCandidate.hair = hairSlideIndex + hairOffset;
 		setHair(OurCandidate.hair);
 	}//plusHairSlides
 
 	hairPrevButton.addEventListener('click', () => {
-		if (OurCandidate.sex) {
-			if (hairSlideIndex < 1) hairSlideIndex = 3;
-		} else {
-			if (hairSlideIndex < 4) hairSlideIndex = 6;
-		}
 		plusHairSlides(-1);
 		if (debug) console.log('hairPrevButton hair=' + OurCandidate.hair + ', i=' + hairSlideIndex);
 	});//hairPrevButton.click
 
 	hairNextButton.addEventListener('click', () => {
-		if (OurCandidate.sex) {
-			if (hairSlideIndex > 3) hairSlideIndex = 0;
-		} else {
-			if (hairSlideIndex > 6) hairSlideIndex = 4;
-		}
 		plusHairSlides(1);
 		if (debug) console.log('hairNextButton hair=' + OurCandidate.hair + ', i=' + hairSlideIndex);
 	});//hairPrevButton.click
 
 // clothesSlider -----------------------------------
-/*	showClothesSlides(clothesSlideIndex + sexOffset);
+	showClothesSlides(clothesSlideIndex + clothesOffset);
 
 	function showClothesSlides(n) {
 		if (n > clothesSlides.length) {
 			clothesSlideIndex = 1;
-			//if (!OurCandidate.sex) { OurCandidate.skin += 3; }
 		}//if
 
 		if (n < 1) {
 			clothesSlideIndex = clothesSlides.length;
-			//if (!OurCandidate.sex) { OurCandidate.skin += 3; }
 		}//if
 
 		for (let i = 0; i < clothesSlides.length; i++) {
@@ -232,7 +217,7 @@ window.addEventListener('DOMContentLoaded', function() {
 	clothesNextButton.addEventListener('click', () => {
 		plusClothesSlides(1);
 		console.log('clothesNextButton cloth=' + OurCandidate.clothes + ', i=' + clothesSlideIndex);
-	});//clothesPrevButton.click*/
+	});//clothesPrevButton.click
 
 	function resetHair() {
 		let hairDivs = document.querySelectorAll('.hair>div'),
@@ -242,12 +227,60 @@ window.addEventListener('DOMContentLoaded', function() {
 				hairDivs[j].remove();
 			}//for
 
-			for (let j = 0; j < hairAllSlides.length; j++) {
-				hair.appendChild(hairAllSlides[j]);
+			for (let j = 0; j < hairAllDivs.length; j++) {
+				hair.appendChild(hairAllDivs[j]);
 			}//for
 		}//if
 		if (debug) console.log('resetHair');
+		//hairSlideIndex = 0;
 	}//resetHair
+
+	function resetClothes() {
+		let clothesDivs = document.querySelectorAll('.clothes>div'),
+				clothes = document.querySelector('.clothes');
+		if (clothesSlides.length < 10) {
+			for (let j = 0; j < clothesDivs.length; j++) {
+				clothesDivs[j].remove();
+			}//for
+
+			for (let j = 0; j < clothesAllDivs.length; j++) {
+				clothes.appendChild(clothesAllDivs[j]);
+			}//for
+		}//if
+		if (debug) console.log('resetClothes');
+		//clothesSlideIndex = 0;
+	}//resetClothes
+
+	function setSliders(sex) {
+		resetHair();
+		resetClothes();
+		hairSlides = document.querySelectorAll(".hair-style");
+		clothesSlides = document.querySelectorAll(".clothes-style");
+
+		for (let i = 0; i < hairSlides.length; i++) {	
+			if (sex) {
+				if (i > 3) hairSlides[i].remove();	
+			} else {
+				if (i < 4) hairSlides[i].remove();
+			}//if	
+		}//for
+
+		for (let i = 0; i < clothesSlides.length; i++) {	
+			if (sex) {
+				if (i > 2) clothesSlides[i].remove();
+			} else {
+				if (i < 3) clothesSlides[i].remove();
+			}//if	
+		}//for
+		
+		hairSlides = document.querySelectorAll(".hair-style");
+		clothesSlides = document.querySelectorAll(".clothes-style");
+		showHairSlides(hairSlideIndex);
+		showClothesSlides(clothesSlideIndex);
+		if (debug) console.log('setSliders');
+	}//setSliders
+	
+	setSliders(OurCandidate.sex);
 
 // sex change -----------------------------------
 	let input = document.querySelectorAll(".radio>input");
@@ -257,63 +290,40 @@ window.addEventListener('DOMContentLoaded', function() {
 			if (OurCandidate.sex) {
 				sexOffset = 0;
 				hairOffset = 0;
+				clothesOffset = 0;
 				OurCandidate.skin = OurCandidate.skin - 3;
 				OurCandidate.hair = OurCandidate.hair - 4;
-				//OurCandidate.clothes = OurCandidate.clothes - 3;
-				resetHair();
-				/*for (let j = 0; j < hairSlides.length; j++) {
-					if (j>=4) hairSlides[j].remove();
-				}//for*/
-				hairSlideIndex = 0;
-				showHairSlides(OurCandidate.hair);
+				OurCandidate.clothes = OurCandidate.clothes - 3;
+				hairSlideIndex = OurCandidate.hair;
+				clothesSlideIndex = OurCandidate.clothes;
 			} else {
 				sexOffset = 3;
 				hairOffset = 4;
+				clothesOffset = 3;
 				OurCandidate.skin = OurCandidate.skin + sexOffset;
 				OurCandidate.hair = OurCandidate.hair + hairOffset;
-				//OurCandidate.clothes = OurCandidate.clothes + 3;
-				resetHair();
-				/*for (let j = 0; j < hairSlides.length; j++) {
-					if (j<4) hairSlides[j].remove();
-				}//for*/
-				hairSlideIndex = 6;
-				showHairSlides(OurCandidate.hair);
+				OurCandidate.clothes = OurCandidate.clothes + 3;
+				hairSlideIndex = OurCandidate.hair - hairOffset;
+				clothesSlideIndex = OurCandidate.clothes - clothesOffset;
 			}//if
+			setSliders(OurCandidate.sex);
 			showSkinSlides(skinSlideIndex);
-			//showHairSlides(hairSlideIndex);
+			showHairSlides(hairSlideIndex);
+			showClothesSlides(clothesSlideIndex);
 			setSkin(OurCandidate.skin);
 			setClothes(OurCandidate.clothes);
 			setHair(OurCandidate.hair);
-			if (debug) console.log(hairSlides);
-			if (debug) console.log(hairAllSlides);
-			if (debug) console.log(this.getAttribute('value') + ' hair=' + OurCandidate.hair + ', i=' + hairSlideIndex);
-			//console.log(this.getAttribute('value') + ' cloth=' + OurCandidate.clothes + ', i=' + clothesSlideIndex);
+			//if (debug) console.log(hairSlides);
+			//if (debug) console.log(hairAllDivs);
+			//if (debug) console.log(this.getAttribute('value') + ' hair=' + OurCandidate.hair + ', i=' + hairSlideIndex);
+			if (debug) console.log(this.getAttribute('value') + ' cloth=' + OurCandidate.clothes + ', i=' + clothesSlideIndex);
 		});
 	}//for
-/*	document.querySelector(".radio").addEventListener('change', () => {
-		sexOffset = 0;
-		skinSlideIndex = OurCandidate.skin - sexOffset;
-		setSkin(1);
-		setClothes(1);
-		setHair(1);
-		showSkinSlides(skinSlideIndex);
-		console.log('male radio ' + OurCandidate.skin + ', ' + skinSlideIndex);
-	});
-	sexFemale.addEventListener('change', () => {
-		sexOffset = 3;
-		setSkin(4);
-		setClothes(4);
-		setHair(4);
-		skinSlideIndex = 1;
-		showSkinSlides(skinSlideIndex);
-		console.log('female radio ' + OurCandidate.skin + ', ' + skinSlideIndex);
-	});*/
 
 // ready button -----------------------------------
 	document.getElementById('ready').addEventListener('click', () => {
 		setCustomCandidate();
 		showCustomCandidate();
-		//console.log(skinSlider);
 		
 	});//readyButton.click
 
