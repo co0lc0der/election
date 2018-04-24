@@ -344,6 +344,7 @@ window.addEventListener('DOMContentLoaded', function() {
 	for (let i = 0; i < cards.length; i++) {
 		cards[i].classList.remove('main-cards-item-active');
 	}//for
+	resetResults();
 
 	let myCard = document.getElementById('our-candidate');
 
