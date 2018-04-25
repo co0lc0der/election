@@ -386,6 +386,10 @@ let cards = document.querySelectorAll('.main-cards-item'),
 
 	//console.log('!!!');
 // main page -----------------------------------
+	let result = [0, 0, 0],
+			counters = document.getElementsByClassName('result-count'),
+			progBars = document.getElementsByClassName('progress-bar');
+
 	function loadCandidate() {
 		//setCustomCandidate();
 		myCard.querySelector('.name').innerHTML = OurCandidate.name;
@@ -425,17 +429,47 @@ let cards = document.querySelectorAll('.main-cards-item'),
 
 	loadCandidate();
 
+	function randomInt(min, max) {
+    var rand = min + Math.random() * (max + 1 - min);
+    rand = Math.floor(rand);
+    return rand;
+  }//randomInt
+
 	function resetResults() {
-		let counters = document.getElementsByClassName('result-count');
-				progBars = document.getElementsByClassName('progress-bar');
-		for (let i = 0; i < counters.length; i++) {
-			counters[i].innerHTML = 0 + '%';
-		}
-		
-		for (let i = 0; i < progBars.length; i++) {
-			progBars[i].style.height = 0 + '%';
-		}
+		result = [0, 0, 0];
+		updateResults(false);
+		for (let i = 0; i < cards.length; i++) {
+			cards[i].classList.remove('main-cards-item-active');
+		}//for
+		if (debug) console.log('resetResults');
 	}//resetResults
+
+	function updateResults(show) {
+		let bigBoss = 0;
+		for (let i = 0; i < result.length; i++) {
+			counters[i].innerHTML = result[i] + '%';
+			progBars[i].style.height = result[i] + '%';
+			if (result[i] > result[bigBoss]) bigBoss = i;
+		}//for
+		if (show) cards[bigBoss].classList.add('main-cards-item-active');
+		if (debug) console.log('updateResults');
+		if (debug) console.log('bigBoss=' + bigBoss);
+	}//updateResults
+
+	function votingResults(rnd = false, addn = 0) {
+		if (rnd) {
+			result[2] = randomInt(1, 100);
+			result[1] = randomInt(1, 100 - result[2]);
+			result[0] = 100 - result[2] - result[1];
+			if (result[0] < 0) result[0] = 0;
+			result[2] = result[2] + addn;
+		} else {
+			result = [25, 26, 49+addn];
+		}
+		if (debug) console.log('votingResults');
+		if (debug) console.log(result);
+		if (debug) console.log('result summ='+(result[0]+result[1]+result[2]));
+	}//votingResults
 
 // reset button -----------------------------------
 	resetButton.addEventListener('click', () => {
@@ -479,6 +513,16 @@ let cards = document.querySelectorAll('.main-cards-item'),
 		showCustomCandidate();
 		if (debug) console.log('resetButton.click');
 	});//resetButton.click
+
+// voting button -----------------------------------
+	votingButton.addEventListener('click', () => {
+		resetResults();
+		votingResults(true);
+		updateResults(true);
+		
+		votingButton.innerHTML = 'повторное голосование';
+		if (debug) console.log('votingButton.click');
+	})//votingButton.click
 
 	if (debug) console.log('myCard');
 	if (debug) console.log(myCard);
