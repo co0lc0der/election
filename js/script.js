@@ -355,32 +355,41 @@ let cards = document.querySelectorAll('.main-cards-item'),
 // ready button -----------------------------------
 	document.getElementById('ready').addEventListener('click', () => {
 		setCustomCandidate();
-		if (OurCandidate.name!='' && OurCandidate.age!='' && OurCandidate.politics!='' && OurCandidate.age!='') {
-			showCustomCandidate();
-			mainPage.style.display = 'block';
-			//overlay.style.display = 'none';
-			customPage.style.display = 'none';
+		if (OurCandidate.name!='' && OurCandidate.politics!='' && OurCandidate.bio!='') {
+			if (OurCandidate.age!='' && !isNaN(OurCandidate.age) && OurCandidate.age.length < 3) {
+				showCustomCandidate();
+				mainPage.style.display = 'block';
+				//overlay.style.display = 'none';
+				customPage.style.display = 'none';
 
-			newCard.setAttribute('id', 'our-candidate');
-			mainCards.appendChild(newCard);
+				newCard.setAttribute('id', 'our-candidate');
+				mainCards.appendChild(newCard);
 
-			cards = document.querySelectorAll('.main-cards-item');
-			for (let i = 0; i < cards.length; i++) {
-				cards[i].classList.remove('main-cards-item-active');
-			}//for
-			resetResults();
+				cards = document.querySelectorAll('.main-cards-item');
+				for (let i = 0; i < cards.length; i++) {
+					cards[i].classList.remove('main-cards-item-active');
+				}//for
+				resetResults();
 
-			myCard = document.getElementById('our-candidate');
-			if (debug) console.log('OurCandidate');
-			if (debug) console.log(OurCandidate);
+				myCard = document.getElementById('our-candidate');
+				if (debug) console.log('OurCandidate');
+				if (debug) console.log(OurCandidate);
 
-			if (debug) console.log('myCard');
-			if (debug) console.log(myCard);
+				if (debug) console.log('myCard');
+				if (debug) console.log(myCard);
 
-			loadCandidate();
+				loadCandidate();
+
+				myCard.querySelector('.photo').classList.remove('photo-1');
+				myCard.querySelector('.photo').innerHTML = document.querySelector('.custom-char').innerHTML;
+				console.log(myCard.querySelector('.photo'));
+			} else {
+				ageInput.focus();
+			}
 		} else {
 			nameInput.focus();
 		}
+
 		if (debug) console.log('readyButton.click');
 	});//readyButton.click
 
@@ -395,27 +404,26 @@ let cards = document.querySelectorAll('.main-cards-item'),
 		myCard.querySelector('.name').innerHTML = OurCandidate.name;
 		//myCard.querySelector('.name').innerHTML = document.getElementById('name').value;
 		//console.log(OurCandidate.age.slice(OurCandidate.age.length-1));
-		//if (OurCandidate.age != '') {
-			let lastDig = +OurCandidate.age.slice(OurCandidate.age.length-1),
-					years = '';
-			switch (lastDig) {
-				case 1:
-					years = ' год';
-					break;
-				case 2:
-					years = ' года';
-					break;
-				case 3:
-					years = ' года';
-					break;
-				case 4:
-					years = ' года';
-					break;
-				default:
-					years = ' лет';
-					break;
-			}
-		//}	
+		let lastDig = +OurCandidate.age.slice(OurCandidate.age.length-1),
+				years = '';
+		switch (lastDig) {
+			case 1:
+				years = ' год';
+				break;
+			case 2:
+				years = ' года';
+				break;
+			case 3:
+				years = ' года';
+				break;
+			case 4:
+				years = ' года';
+				break;
+			default:
+				years = ' лет';
+				break;
+		}
+		if (OurCandidate.age.substring(0,1)=='1') years = ' лет';
 		myCard.querySelector('.age').innerHTML = OurCandidate.age + years;
 		//myCard.querySelector('.age').innerHTML = document.getElementById('age').value;
 		if (OurCandidate.sex) 
