@@ -381,7 +381,7 @@ let cards = document.querySelectorAll('.main-cards-item'),
 	document.getElementById('ready').addEventListener('click', () => {
 		setCustomCandidate();
 		if (OurCandidate.name!='' && OurCandidate.politics!='') {
-			if (OurCandidate.age!='' && !isNaN(OurCandidate.age) && OurCandidate.age.length < 3) {
+			if (OurCandidate.age!='' && !isNaN(OurCandidate.age) && OurCandidate.age.length < 3 && OurCandidate.age > 20) {
 				if (OurCandidate.bio!='') {
 					showCustomCandidate();
 					mainPage.style.display = 'block';
