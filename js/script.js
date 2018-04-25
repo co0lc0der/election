@@ -107,8 +107,10 @@ window.addEventListener('DOMContentLoaded', function() {
 		ageInput.value = OurCandidate.age;
 		if (OurCandidate.sex) {
 			sexMale.setAttribute('checked', '');
+			//sexMale.click();
 		} else {
 			sexFemale.setAttribute('checked', '');
+			//sexFemale.click();
 		}
 		polInput.value = OurCandidate.politics;
 		bioInput.value = OurCandidate.bio;
@@ -348,6 +350,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				clothesOffset = 3;
 				OurCandidate.skin = OurCandidate.skin + sexOffset;
 				OurCandidate.hair = OurCandidate.hair + hairOffset;
+				if (OurCandidate.hair > 7) OurCandidate.hair = 7;
 				OurCandidate.clothes = OurCandidate.clothes + 3;
 				hairSlideIndex = OurCandidate.hair - hairOffset;
 				clothesSlideIndex = OurCandidate.clothes - clothesOffset;
@@ -361,7 +364,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			setHair(OurCandidate.hair);
 			//if (debug) console.log(hairSlides);
 			//if (debug) console.log(hairAllDivs);
-			//if (debug) console.log(this.getAttribute('value') + ' hair=' + OurCandidate.hair + ', i=' + hairSlideIndex);
+			if (debug) console.log(this.getAttribute('value') + ' hair=' + OurCandidate.hair + ', i=' + hairSlideIndex);
 			if (debug) console.log(this.getAttribute('value') + ' cloth=' + OurCandidate.clothes + ', i=' + clothesSlideIndex);
 		});
 	}//for
@@ -527,6 +530,11 @@ let cards = document.querySelectorAll('.main-cards-item'),
 			clothes: 1,
 			hair: 1
 		};
+
+		sexMale.click();
+		setSkin(1);
+		setHair(1);
+		setClothes(1);
 
 		for (let i = 0; i < skinSlides.length; i++) {
 			skinSlides[i].style.display = 'none';
