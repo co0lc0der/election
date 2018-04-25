@@ -499,12 +499,16 @@ let cards = document.querySelectorAll('.main-cards-item'),
 		if (debug) console.log('bigBoss=' + bigBoss);
 	}//updateResults
 
-	function votingResults(rnd = false, addn = 0) {
+	function votingResults(rnd = false, addn = 1) {
 		if (rnd) {
-			result[0] = randomInt(1, 98);
-			result[1] = randomInt(1, 98 - result[0]);
-			//result[2] = randomInt(1, 98-addn) + addn;
-			result[2] = 100 - result[0] - result[1];
+			result[2] = randomInt(addn, 98);
+			result[1] = randomInt(1, 98 - result[2]);
+			result[0] = 100 - result[2] - result[1];
+			/*if (addn = 0) {
+				result[2] = randomInt(25, 100 - result[0] - result[1]);
+			} else {
+				result[2] = addn + (100 - result[0] - result[1]);
+			}*/	
 			for (let i = 0; i < result.length; i++) {
 				if (result[i] < 1) result[i] = 1;
 			}
@@ -561,6 +565,8 @@ let cards = document.querySelectorAll('.main-cards-item'),
 			if (customPage.childNodes[i].nodeType == 1) customPage.childNodes[i].style.display = 'block';	
 		}
 		showCustomCandidate();
+
+		votingButton.innerHTML = 'провести честное	голосование';
 		if (debug) console.log('resetButton.click');
 	});//resetButton.click
 
