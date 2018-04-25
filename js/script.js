@@ -22,7 +22,7 @@ window.addEventListener('DOMContentLoaded', function() {
 				politics: 'Левые',
 				bio: 'Суперкандидат!',
 				skin: 2,
-				clothes: 1,
+				clothes: 2,
 				hair: 2
 			},
 			/*OurCandidate = {
@@ -49,7 +49,29 @@ window.addEventListener('DOMContentLoaded', function() {
 			hair = document.getElementById('person-hair'),
 			sexOffset = 0,//смещение в картинках по полу
 			hairOffset = 0,//смещение в волосах по полу
-			clothesOffset = 0;//смещение в одежде по полу
+			clothesOffset = 0,//смещение в одежде по полу
+			mes = document.createElement('div');
+
+// div for messages -----------------------------------
+ mes.id = 'message';
+	mes.style.cssText = `width: 100%; \
+											border: 1px solid red;
+											text-align: center;
+											display: none;`;
+	mes.innerHTML = 'сообщение';
+	document.body.appendChild(mes);
+
+	function showMes(text) {
+		mes = document.querySelector('#message');
+		mes.innerHTML = text;
+		mes.style.display = 'block';
+	}//showMes
+
+	function hideMes() {
+		mes = document.querySelector('#message');
+		mes.innerHTML = '';
+		mes.style.display = 'none';
+	}//showMes
 
 // create button -----------------------------------
 	document.getElementById('popup-btn').addEventListener('click', () => {
@@ -355,38 +377,48 @@ let cards = document.querySelectorAll('.main-cards-item'),
 // ready button -----------------------------------
 	document.getElementById('ready').addEventListener('click', () => {
 		setCustomCandidate();
-		if (OurCandidate.name!='' && OurCandidate.politics!='' && OurCandidate.bio!='') {
+		if (OurCandidate.name!='' && OurCandidate.politics!='') {
 			if (OurCandidate.age!='' && !isNaN(OurCandidate.age) && OurCandidate.age.length < 3) {
-				showCustomCandidate();
-				mainPage.style.display = 'block';
-				//overlay.style.display = 'none';
-				customPage.style.display = 'none';
+				if (OurCandidate.bio!='') {
+					showCustomCandidate();
+					mainPage.style.display = 'block';
+					//overlay.style.display = 'none';
+					customPage.style.display = 'none';
 
-				newCard.setAttribute('id', 'our-candidate');
-				mainCards.appendChild(newCard);
+					newCard.setAttribute('id', 'our-candidate');
+					mainCards.appendChild(newCard);
 
-				cards = document.querySelectorAll('.main-cards-item');
-				for (let i = 0; i < cards.length; i++) {
-					cards[i].classList.remove('main-cards-item-active');
-				}//for
-				resetResults();
+					cards = document.querySelectorAll('.main-cards-item');
+					for (let i = 0; i < cards.length; i++) {
+						cards[i].classList.remove('main-cards-item-active');
+					}//for
+					resetResults();
 
-				myCard = document.getElementById('our-candidate');
-				if (debug) console.log('OurCandidate');
-				if (debug) console.log(OurCandidate);
+					myCard = document.getElementById('our-candidate');
+					if (debug) console.log('OurCandidate');
+					if (debug) console.log(OurCandidate);
 
-				if (debug) console.log('myCard');
-				if (debug) console.log(myCard);
+					if (debug) console.log('myCard');
+					if (debug) console.log(myCard);
 
-				loadCandidate();
+					loadCandidate();
 
-				myCard.querySelector('.photo').classList.remove('photo-1');
-				myCard.querySelector('.photo').innerHTML = document.querySelector('.custom-char').innerHTML;
-				console.log(myCard.querySelector('.photo'));
+					myCard.querySelector('.photo').classList.remove('photo-1');
+					myCard.querySelector('.photo').innerHTML = document.querySelector('.custom-char').innerHTML;
+					myCard.querySelector('.btn').remove();
+
+					hideMes();
+					console.log(myCard.querySelector('.photo'));
+				} else {
+					showMes('Нужно заплонить биографию');
+					bioInput.focus();
+				}
 			} else {
+				showMes('Неверно введен возраст');
 				ageInput.focus();
 			}
 		} else {
+			showMes('Не введено имя');
 			nameInput.focus();
 		}
 
@@ -470,7 +502,7 @@ let cards = document.querySelectorAll('.main-cards-item'),
 			result[1] = randomInt(1, 100 - result[2]);
 			result[0] = 100 - result[2] - result[1];
 			for (let i = 0; i < result.length; i++) {
-				if (result[i] < 0) result[i] = 0;
+				if (result[i] < 1) result[i] = 1;
 			}
 		} else {
 			result = [25, 26, 49+addn];
