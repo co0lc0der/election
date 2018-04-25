@@ -498,9 +498,10 @@ let cards = document.querySelectorAll('.main-cards-item'),
 
 	function votingResults(rnd = false, addn = 0) {
 		if (rnd) {
-			result[2] = randomInt(1, 100-addn) + addn;
-			result[1] = randomInt(1, 100 - result[2]);
-			result[0] = 100 - result[2] - result[1];
+			result[0] = randomInt(1, 98);
+			result[1] = randomInt(1, 98 - result[0]);
+			//result[2] = randomInt(1, 98-addn) + addn;
+			result[2] = 100 - result[0] - result[1];
 			for (let i = 0; i < result.length; i++) {
 				if (result[i] < 1) result[i] = 1;
 			}
