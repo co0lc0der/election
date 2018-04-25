@@ -458,11 +458,12 @@ let cards = document.querySelectorAll('.main-cards-item'),
 
 	function votingResults(rnd = false, addn = 0) {
 		if (rnd) {
-			result[2] = randomInt(1, 100);
+			result[2] = randomInt(1, 100-addn) + addn;
 			result[1] = randomInt(1, 100 - result[2]);
 			result[0] = 100 - result[2] - result[1];
-			if (result[0] < 0) result[0] = 0;
-			result[2] = result[2] + addn;
+			for (let i = 0; i < result.length; i++) {
+				if (result[i] < 0) result[i] = 0;
+			}
 		} else {
 			result = [25, 26, 49+addn];
 		}
@@ -522,7 +523,16 @@ let cards = document.querySelectorAll('.main-cards-item'),
 		
 		votingButton.innerHTML = 'повторное голосование';
 		if (debug) console.log('votingButton.click');
-	})//votingButton.click
+	});//votingButton.click
+
+// crime button -----------------------------------
+	crimeButton.addEventListener('click', () => {
+		resetResults();
+		votingResults(true, 25);
+		updateResults(true);
+		
+		if (debug) console.log('crimeButton.click');
+	});//crimeButton.click
 
 	if (debug) console.log('myCard');
 	if (debug) console.log(myCard);
