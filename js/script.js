@@ -1,21 +1,40 @@
 let debug = true;
 
-class Candidate {
-	constructor(name = 'Иванов Иван Иванович', age = 40, sex = true, politics = 'Левые', bio = 'Суперкандидат!', skin = 2, clothes = 1, hair = 2) {
-		this.name = name;
-		this.age = age;
-		this.sex = sex;
-		this.politics = politics;
-		this.bio = bio;
-		this.skin = skin;
-		this.clothes = clothes;
-		this.hair = hair;
-	}//constructor
-
-}//Candidate
-
 window.addEventListener('DOMContentLoaded', function() {
-	let OurCandidate = new Candidate();
+	/*class Candidate {
+		constructor(name = 'Иванов Иван Иванович', age = 40, sex = true, politics = 'Левые', bio = 'Суперкандидат!', skin = 2, clothes = 1, hair = 2) {
+			this.name = name;
+			this.age = age;
+			this.sex = sex;
+			this.politics = politics;
+			this.bio = bio;
+			this.skin = skin;
+			this.clothes = clothes;
+			this.hair = hair;
+		}//constructor
+	}//Candidate*/
+
+	let //OurCandidate = new Candidate(),
+			OurCandidate = {
+				name: 'Иванов Иван Иванович',
+				age: '40',
+				sex: true,
+				politics: 'Левые',
+				bio: 'Суперкандидат!',
+				skin: 2,
+				clothes: 1,
+				hair: 2
+			},
+			/*OurCandidate = {
+				name: '',
+				age: '',
+				sex: true,
+				politics: '',
+				bio: '',
+				skin: 1,
+				clothes: 1,
+				hair: 1
+			},*/
 			customPage = document.getElementsByClassName('custom')[0],
 			mainPage = document.getElementsByClassName('main')[0],
 			overlay = document.getElementsByClassName('overlay')[0],
@@ -33,7 +52,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			clothesOffset = 0;//смещение в одежде по полу
 
 // create button -----------------------------------
-	document.getElementById('popup-btn').addEventListener('click', () => {
+//	document.getElementById('popup-btn').addEventListener('click', () => {
 		mainPage.style.display = 'none';
 		overlay.style.display = 'none';
 		customPage.style.display = 'flex';
@@ -42,7 +61,8 @@ window.addEventListener('DOMContentLoaded', function() {
 			if (customPage.childNodes[i].nodeType == 1) customPage.childNodes[i].style.display = 'block';	
 		}
 		showCustomCandidate();
-	});//createButton.click
+		if (debug) console.log('createButton.click');
+//	});//createButton.click
 
 // customizer -----------------------------------
 	function setSkin(n) {
@@ -78,16 +98,20 @@ window.addEventListener('DOMContentLoaded', function() {
 	}//showCustomCandidate
 
 	function setCustomCandidate() {
-		OurCandidate.name = nameInput.value;
-		OurCandidate.age = ageInput.value;
-		OurCandidate.sex = sexMale.checked;
+		OurCandidate.name = document.getElementById('name').value;
+		OurCandidate.age = document.getElementById('age').value;
+		OurCandidate.sex = document.getElementById('male').checked;
 		if (OurCandidate.sex) {
 			sexOffset = 0;
+			hairOffset = 0;
+			clothesOffset = 0;
 		} else {
 			sexOffset = 3;
+			hairOffset = 4;
+			clothesOffset = 3;
 		}
-		OurCandidate.politics = polInput.value;
-		OurCandidate.bio = bioInput.value;
+		OurCandidate.politics = document.getElementById('select').value;
+		OurCandidate.bio = document.getElementById('bio').value;
 		//setSkin(OurCandidate.skin);
 		//setClothes(OurCandidate.clothes);
 		//setHair(OurCandidate.hair);
@@ -320,42 +344,86 @@ window.addEventListener('DOMContentLoaded', function() {
 		});
 	}//for
 
+let cards = document.querySelectorAll('.main-cards-item'),
+		mainCards = document.querySelector('.main-cards'),
+		newCard = cards[0].cloneNode(true),
+		resetButton = document.getElementById('reset'),
+		votingButton = document.getElementById('voting'),
+		crimeButton = document.getElementById('crime'),
+		myCard = newCard;
+
 // ready button -----------------------------------
 	document.getElementById('ready').addEventListener('click', () => {
 		setCustomCandidate();
-		showCustomCandidate();
-		mainPage.style.display = 'block';
-		//overlay.style.display = 'none';
-		customPage.style.display = 'none';
+		if (OurCandidate.name!='' && OurCandidate.age!='' && OurCandidate.politics!='' && OurCandidate.age!='') {
+			showCustomCandidate();
+			mainPage.style.display = 'block';
+			//overlay.style.display = 'none';
+			customPage.style.display = 'none';
+
+			newCard.setAttribute('id', 'our-candidate');
+			mainCards.appendChild(newCard);
+
+			cards = document.querySelectorAll('.main-cards-item');
+			for (let i = 0; i < cards.length; i++) {
+				cards[i].classList.remove('main-cards-item-active');
+			}//for
+			resetResults();
+
+			myCard = document.getElementById('our-candidate');
+			if (debug) console.log('OurCandidate');
+			if (debug) console.log(OurCandidate);
+
+			if (debug) console.log('myCard');
+			if (debug) console.log(myCard);
+
+			loadCandidate();
+		} else {
+			nameInput.focus();
+		}
+		if (debug) console.log('readyButton.click');
 	});//readyButton.click
 
+	//console.log('!!!');
 // main page -----------------------------------
-	let cards = document.querySelectorAll('.main-cards-item'),
-			mainCards = document.querySelector('.main-cards'),
-			newCard = cards[0].cloneNode(true),
-			resetButton = document.getElementById('reset'),
-			votingButton = document.getElementById('voting'),
-			crimeButton = document.getElementById('crime');
+	function loadCandidate() {
+		//setCustomCandidate();
+		myCard.querySelector('.name').innerHTML = OurCandidate.name;
+		//myCard.querySelector('.name').innerHTML = document.getElementById('name').value;
+		//console.log(OurCandidate.age.slice(OurCandidate.age.length-1));
+		//if (OurCandidate.age != '') {
+			let lastDig = +OurCandidate.age.slice(OurCandidate.age.length-1),
+					years = '';
+			switch (lastDig) {
+				case 1:
+					years = ' год';
+					break;
+				case 2:
+					years = ' года';
+					break;
+				case 3:
+					years = ' года';
+					break;
+				case 4:
+					years = ' года';
+					break;
+				default:
+					years = ' лет';
+					break;
+			}
+		//}	
+		myCard.querySelector('.age').innerHTML = OurCandidate.age + years;
+		//myCard.querySelector('.age').innerHTML = document.getElementById('age').value;
+		if (OurCandidate.sex) 
+			myCard.querySelector('.sex').innerHTML = 'Мужской';
+		else
+			myCard.querySelector('.sex').innerHTML = 'Женский';
+		myCard.querySelector('.views').innerHTML = OurCandidate.politics;
+		myCard.querySelector('.bio').innerHTML = OurCandidate.bio;
+		if (debug) console.log('loadCandidate');
+	}//loadCandidate
 
-	newCard.setAttribute('id', 'our-candidate');
-	mainCards.appendChild(newCard);
-
-	cards = document.querySelectorAll('.main-cards-item');
-	for (let i = 0; i < cards.length; i++) {
-		cards[i].classList.remove('main-cards-item-active');
-	}//for
-	resetResults();
-
-	let myCard = document.getElementById('our-candidate');
-
-	myCard.querySelector('.name').innerHTML = OurCandidate.name;
-	myCard.querySelector('.age').innerHTML = OurCandidate.age;
-	if (OurCandidate.sex) 
-		myCard.querySelector('.sex').innerHTML = 'Мужской';
-	else
-		myCard.querySelector('.sex').innerHTML = 'Женский';
-	myCard.querySelector('.views').innerHTML = OurCandidate.politics;
-	myCard.querySelector('.bio').innerHTML = OurCandidate.bio;
+	loadCandidate();
 
 	function resetResults() {
 		let counters = document.getElementsByClassName('result-count');
@@ -373,6 +441,32 @@ window.addEventListener('DOMContentLoaded', function() {
 	resetButton.addEventListener('click', () => {
 		resetResults();
 		
+		OurCandidate = {
+			name: '',
+			age: '',
+			sex: true,
+			politics: '',
+			bio: '',
+			skin: 1,
+			clothes: 1,
+			hair: 1
+		};
+
+		for (let i = 0; i < skinSlides.length; i++) {
+			skinSlides[i].style.display = 'none';
+		}//for
+		skinSlides[0].style.display = 'flex';
+
+		for (let i = 0; i < hairSlides.length; i++) {
+			hairSlides[i].style.display = 'none';
+		}//for
+		hairSlides[0].style.display = 'flex';
+
+		for (let i = 0; i < clothesSlides.length; i++) {
+			clothesSlides[i].style.display = 'none';
+		}//for
+		clothesSlides[0].style.display = 'flex';
+
 		myCard.remove();
 
 		mainPage.style.display = 'none';
@@ -383,9 +477,10 @@ window.addEventListener('DOMContentLoaded', function() {
 			if (customPage.childNodes[i].nodeType == 1) customPage.childNodes[i].style.display = 'block';	
 		}
 		showCustomCandidate();
+		if (debug) console.log('resetButton.click');
 	});//resetButton.click
 
 	if (debug) console.log('myCard');
-	if (debug) console.log(myCard.innerHTML);
+	if (debug) console.log(myCard);
 
 });//DOMContentLoaded
