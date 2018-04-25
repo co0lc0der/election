@@ -61,6 +61,8 @@ window.addEventListener('DOMContentLoaded', function() {
 	mes.innerHTML = 'сообщение';
 	document.body.appendChild(mes);
 
+	//document.querySelector('.popup').classList.add('rubberBand');
+
 	function showMes(text) {
 		mes = document.querySelector('#message');
 		mes.innerHTML = text;
@@ -383,6 +385,7 @@ let cards = document.querySelectorAll('.main-cards-item'),
 		if (OurCandidate.name!='' && OurCandidate.politics!='') {
 			if (OurCandidate.age!='' && !isNaN(OurCandidate.age) && OurCandidate.age.length < 3 && OurCandidate.age > 20) {
 				if (OurCandidate.bio!='') {
+					document.querySelector('.person').classList.remove('bounceInDown');
 					showCustomCandidate();
 					mainPage.style.display = 'block';
 					//overlay.style.display = 'none';
@@ -398,6 +401,9 @@ let cards = document.querySelectorAll('.main-cards-item'),
 					resetResults();
 
 					myCard = document.getElementById('our-candidate');
+					myCard.classList.remove('bounceInLeft');
+					myCard.classList.add('bounceInRight');
+
 					if (debug) console.log('OurCandidate');
 					if (debug) console.log(OurCandidate);
 
@@ -482,7 +488,11 @@ let cards = document.querySelectorAll('.main-cards-item'),
 		result = [0, 0, 0];
 		updateResults(false);
 		for (let i = 0; i < cards.length; i++) {
+			//cards[i].classList.remove('bounceInRight');
+			//cards[i].classList.remove('bounceInLeft');
+			//cards[i].classList.remove('bounceInDown');
 			cards[i].classList.remove('main-cards-item-active');
+			cards[i].classList.remove('pulse');
 		}//for
 		if (debug) console.log('resetResults');
 	}//resetResults
@@ -494,7 +504,11 @@ let cards = document.querySelectorAll('.main-cards-item'),
 			progBars[i].style.height = result[i] + '%';
 			if (result[i] > result[bigBoss]) bigBoss = i;
 		}//for
-		if (show) cards[bigBoss].classList.add('main-cards-item-active');
+		if (show) {
+			cards[bigBoss].classList.add('main-cards-item-active');
+			//document.querySelector('.main-cards-item-active').classList.add('animated');
+			document.querySelector('.main-cards-item-active').classList.add('pulse');
+		}					
 		if (debug) console.log('updateResults');
 		if (debug) console.log('bigBoss=' + bigBoss);
 	}//updateResults
@@ -522,6 +536,13 @@ let cards = document.querySelectorAll('.main-cards-item'),
 
 // reset button -----------------------------------
 	resetButton.addEventListener('click', () => {
+		for (let i = 0; i < cards.length; i++) {
+			cards[i].classList.remove('bounceInRight');
+			cards[i].classList.remove('bounceInLeft');
+			cards[i].classList.remove('bounceInDown');
+			cards[i].classList.remove('main-cards-item-active');
+			cards[i].classList.remove('pulse');
+		}//for
 		resetResults();
 		
 		OurCandidate = {
@@ -572,16 +593,30 @@ let cards = document.querySelectorAll('.main-cards-item'),
 
 // voting button -----------------------------------
 	votingButton.addEventListener('click', () => {
+		for (let i = 0; i < cards.length; i++) {
+			cards[i].classList.remove('bounceInRight');
+			cards[i].classList.remove('bounceInLeft');
+			cards[i].classList.remove('bounceInDown');
+			cards[i].classList.remove('main-cards-item-active');
+			cards[i].classList.remove('pulse');
+		}//for
 		resetResults();
 		votingResults(true);
 		updateResults(true);
-		
+		//document.querySelector('.main-cards-item-active').classList.remove('pulse');
 		votingButton.innerHTML = 'повторное голосование';
 		if (debug) console.log('votingButton.click');
 	});//votingButton.click
 
 // crime button -----------------------------------
 	crimeButton.addEventListener('click', () => {
+		for (let i = 0; i < cards.length; i++) {
+			cards[i].classList.remove('bounceInRight');
+			cards[i].classList.remove('bounceInLeft');
+			cards[i].classList.remove('bounceInDown');
+			cards[i].classList.remove('main-cards-item-active');
+			cards[i].classList.remove('pulse');
+		}//for
 		resetResults();
 		votingResults(true, 25);
 		updateResults(true);

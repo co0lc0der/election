@@ -3,13 +3,14 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Выборы</title>
+	<link rel="stylesheet" href="css/animate.css">
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 	<!-- Main Page -->
 	<div class="main">
 		<div class="main-cards">
-			<div class="main-cards-item main-cards-item-active">
+			<div class="main-cards-item main-cards-item-active animated bounceInLeft">
 				<div class="candidate-block">
 					<div class="photo photo-1"></div>
 					<div class="result">
@@ -29,7 +30,7 @@
 				Биография
 				<div class="bio">13 декабря 2016 года объявил, что намерен баллотироваться на президентских выборах 2018 года, опубликовал основные положения своей предвыборной программы и начал собирать сторонников</div>
 			</div>
-			<div class="main-cards-item ">
+			<div class="main-cards-item animated bounceInDown">
 				<div class="candidate-block">
 					<div class="photo photo-2"></div>
 					<div class="result">
@@ -50,7 +51,7 @@
 				<div class="bio">Ко всем прочим заслугам можно отнести ее активную гражданскую позицию. Еще в конце 2011-го, после выборов в Государственную думу, вошла в десятку самых влиятельных российских женщин, рейтинг которой был составлен радиостанцией «Эхо Москвы»..</div>
 			</div>
 		</div>
-		<div class="main-buttons">
+		<div class="main-buttons animated fadeInUp">
 			<div id="reset" class="btn">сбросить результаты</div>
 			<div id="voting" class="btn">провести честное
 			голосование</div>
@@ -60,16 +61,18 @@
 
 	<!-- Popup -->
 	<div class="overlay">
+			<div id="popup-anim" class="animated bounceIn">
 	 		<div class="popup">
 				<div class="popup-title">не доволен прошедшими выборами?</div>
 				<div class="popup-subtitle">создай своего кандидата</div>
 				<button id="popup-btn" class="popup-btn">создать</button>
 	 		</div>
+	 	</div> 
 	</div>
 
 	<!-- Customization -->
 	<div class="custom">
-		<div class="custom-info">
+		<div class="custom-info animated bounceInLeft">
 			<label for="name">Фамилия Имя Отчество</label>
 			<input type="text" id="name">
 			<label for="age">Возраст, лет</label>
@@ -90,16 +93,16 @@
 		</div>
 
 		<div class="custom-char">
-			<div class="person construct">
+			<div class="person construct animated bounceInDown">
 				<div id="person-skin" class="person-skin"></div>
 				<div id="person-clothes" class="person-clothes"></div>
 				<div id="person-hair" class="person-hair"></div>
 				<div class="person-shoes"></div>
 			</div>
-			<div id="ready" class="btn">готово</div>
+			<div id="ready" class="btn animated bounceInUp">готово</div>
 		</div>
 
-		<div class="custom-style">
+		<div class="custom-style animated bounceInRight">
 			<div class="style-text">
 				Выберите цвет кожи
 			</div>
@@ -107,9 +110,9 @@
 				<div class="prev">
 					<i class="flaticon-left-arrow"></i>
 				</div>
-					<div class="skin-color skin-color-1"></div>
-					<div class="skin-color skin-color-2"></div>
-					<div class="skin-color skin-color-3"></div>
+					<div class="skin-color skin-color-1 animated fadeIn"></div>
+					<div class="skin-color skin-color-2 animated fadeIn"></div>
+					<div class="skin-color skin-color-3 animated fadeIn"></div>
 				<div class="next">
 					<i class="flaticon-right-arrow"></i>
 				</div>
@@ -121,13 +124,13 @@
 				<div class="prev">
 					<i class="flaticon-left-arrow"></i>
 				</div>
-					<div class="hair-style hair-style-1"></div>
-					<div class="hair-style hair-style-2"></div>
-					<div class="hair-style hair-style-3"></div>
-					<div class="hair-style hair-style-4"></div>
-					<div class="hair-style hair-style-5"></div>
-					<div class="hair-style hair-style-6"></div>
-					<div class="hair-style hair-style-7"></div>
+					<div class="hair-style hair-style-1 animated fadeIn"></div>
+					<div class="hair-style hair-style-2 animated fadeIn"></div>
+					<div class="hair-style hair-style-3 animated fadeIn"></div>
+					<div class="hair-style hair-style-4 animated fadeIn"></div>
+					<div class="hair-style hair-style-5 animated fadeIn"></div>
+					<div class="hair-style hair-style-6 animated fadeIn"></div>
+					<div class="hair-style hair-style-7 animated fadeIn"></div>
 				<div class="next">
 					<i class="flaticon-right-arrow"></i>
 				</div>
@@ -139,12 +142,12 @@
 				<div class="prev">
 					<i class="flaticon-left-arrow"></i>
 				</div>
-					<div class="clothes-style clothes-style-1"></div>
-					<div class="clothes-style clothes-style-2"></div>
-					<div class="clothes-style clothes-style-3"></div>
-					<div class="clothes-style clothes-style-4"></div>
-					<div class="clothes-style clothes-style-5"></div>
-					<div class="clothes-style clothes-style-6"></div>
+					<div class="clothes-style clothes-style-1 animated fadeIn"></div>
+					<div class="clothes-style clothes-style-2 animated fadeIn"></div>
+					<div class="clothes-style clothes-style-3 animated fadeIn"></div>
+					<div class="clothes-style clothes-style-4 animated fadeIn"></div>
+					<div class="clothes-style clothes-style-5 animated fadeIn"></div>
+					<div class="clothes-style clothes-style-6 animated fadeIn"></div>
 				<div class="next">
 					<i class="flaticon-right-arrow"></i>
 				</div>
